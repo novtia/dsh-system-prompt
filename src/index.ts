@@ -17,7 +17,7 @@ const PERSONA_SECTION = 'deployment:persona'
 const SETTINGS_NS = 'system-prompt'
 
 const SettingsSchema = z.object({
-  persona: z.string().default(''),
+  persona: z.string(),
 })
 
 interface AssembledSection {
@@ -39,7 +39,12 @@ interface SettingsDescriptor {
 
 interface SettingsService {
   describe(): SettingsDescriptor[]
-  installSection(
+  register(
+    ns: string,
+    schema: typeof SettingsSchema,
+    options?: { base?: { persona: string } },
+  ): unknown
+  installSection?(
     owner: Context,
     ns: string,
     schema: typeof SettingsSchema,
@@ -94,22 +99,36 @@ function applyOverlay(sections: readonly AssembledSection[], overlay: string): A
 }
 
 /**
+ * Expose `system-prompt` through the settings provider. Desktop's pinned
+ * harness has `register` only; newer hosts also have `installSection`.
+ * @param ctx - the plugin context that owns the registration fiber.
+ * @param settings - the live settings provider.
+ */
+function registerPersonaSettings(ctx: Context, settings: SettingsService): void {
+  const entry = { persona: '' }
+  try {
+    if (typeof settings.installSection === 'function') {
+      settings.installSection(ctx, SETTINGS_NS, SettingsSchema, entry, {
+        setSource: () => {},
+        onChange: () => {},
+      })
+      return
+    }
+    settings.register(SETTINGS_NS, SettingsSchema, { base: entry })
+  } catch (error) {
+    const message = error instanceof Error ? error.message : String(error)
+    if (!message.includes('already registered')) throw error
+  }
+}
+
+/**
  * Install the settings namespace when missing, then overlay persona on assemble.
  * @param ctx - the plugin context after `systemPrompt` is available.
  */
 export function apply(ctx: Context): void {
   ctx.inject(['settings'], (settingsCtx) => {
-    const settings = settingsCtx.get('settings') as SettingsService | undefined
-    if (settings === undefined) return
-    try {
-      settings.installSection(ctx, SETTINGS_NS, SettingsSchema, { persona: '' }, {
-        setSource: () => {},
-        onChange: () => {},
-      })
-    } catch (error) {
-      const message = error instanceof Error ? error.message : String(error)
-      if (!message.includes('already registered')) throw error
-    }
+    const settings = (settingsCtx as Context & { settings: SettingsService }).settings
+    registerPersonaSettings(settingsCtx, settings)
   })
 
   type AssembleListener = (
