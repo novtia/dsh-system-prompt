@@ -1,0 +1,6 @@
+url: https://github.com/novtia/dsh-system-prompt
+name: novtia/dsh-system-prompt
+category: ui
+description:
+  en: Settings page that overlays the deployment identity fragment of every session, including agent presets.
+  zh: 在设置里覆盖每个会话的身份提示词，包括由 Agent 预设组成的会话。
