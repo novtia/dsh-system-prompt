@@ -10,7 +10,7 @@ window.__ModuleLoader__.load({
 		let react = require("react");
 		let react_dom = require("react-dom");
 		//#region \0dsh-css:D:\AI\dsh-system-prompt\src\client\SystemPromptSection.module.css.mjs
-		const css = ".wW440W_section{max-width:720px;color:var(--dsw-alias-label-primary);flex-direction:column;gap:12px;display:flex}.wW440W_title{margin:0;font-size:18px;font-weight:600}.wW440W_intro{color:var(--dsw-alias-label-tertiary);margin:0;font-size:13px;line-height:1.5}.wW440W_status{color:var(--dsw-alias-label-tertiary);margin:0;font-size:12px;line-height:1.5}.wW440W_head{align-items:center;gap:8px;display:flex}.wW440W_label{min-width:0;color:var(--dsw-alias-label-primary);flex:1;font-size:13px;font-weight:500;line-height:1.5}.wW440W_badges{align-items:center;gap:8px;display:inline-flex}.wW440W_badge{white-space:nowrap;background:var(--dsw-alias-bg-module-platform);color:var(--dsw-alias-label-secondary);border-radius:999px;padding:1px 8px;font-size:11px;font-weight:500;line-height:17px}.wW440W_reset{font:inherit;color:var(--dsw-alias-label-secondary);cursor:pointer;background:0 0;border:none;padding:0;font-size:12px;line-height:1.5}.wW440W_reset:hover:not(:disabled){color:var(--dsw-alias-label-primary)}.wW440W_reset:disabled{cursor:default}.wW440W_textarea{box-sizing:border-box;border:1px solid var(--dsw-alias-border-l2);background:var(--dsw-alias-bg-layer-1);width:100%;min-height:240px;color:var(--dsw-alias-label-primary);font:inherit;font-family:var(--dsw-font-mono,ui-monospace, SFMono-Regular, Menlo, monospace);resize:vertical;border-radius:10px;padding:12px;font-size:13px;line-height:1.5}.wW440W_textarea:focus-visible{border-color:var(--dsw-alias-brand-primary);outline:none}.wW440W_textarea:disabled{color:var(--dsw-alias-label-tertiary);cursor:default}.wW440W_hint{color:var(--dsw-alias-label-tertiary);margin:0;font-size:12px;line-height:1.5}.wW440W_footer{justify-content:flex-end;align-items:center;gap:8px;display:flex}.wW440W_failed{min-width:0;color:var(--dsw-alias-label-error);flex:1;margin:0;font-size:12px;line-height:1.5}";
+		const css = ".wW440W_section{max-width:720px;color:var(--dsw-alias-label-primary);flex-direction:column;gap:12px;display:flex}.wW440W_title{margin:0;font-size:18px;font-weight:600}.wW440W_intro{color:var(--dsw-alias-label-tertiary);margin:0;font-size:13px;line-height:1.5}.wW440W_status{color:var(--dsw-alias-label-tertiary);margin:0;font-size:12px;line-height:1.5}.wW440W_head{align-items:center;gap:8px;display:flex}.wW440W_label{min-width:0;color:var(--dsw-alias-label-primary);flex:1;font-size:13px;font-weight:500;line-height:1.5}.wW440W_badges{align-items:center;gap:8px;display:inline-flex}.wW440W_badge{white-space:nowrap;background:var(--dsw-alias-bg-module-platform);color:var(--dsw-alias-label-secondary);border-radius:999px;padding:1px 8px;font-size:11px;font-weight:500;line-height:17px}.wW440W_reset{font:inherit;color:var(--dsw-alias-label-secondary);cursor:pointer;background:0 0;border:none;padding:0;font-size:12px;line-height:1.5}.wW440W_reset:hover:not(:disabled){color:var(--dsw-alias-label-primary)}.wW440W_reset:disabled{cursor:default}.wW440W_textarea{box-sizing:border-box;border:1px solid var(--dsw-alias-border-l2);background:var(--dsw-alias-bg-layer-1);width:100%;min-height:240px;color:var(--dsw-alias-label-primary);font:inherit;font-family:var(--dsw-font-mono,ui-monospace, SFMono-Regular, Menlo, monospace);resize:vertical;border-radius:10px;padding:12px;font-size:13px;line-height:1.5}.wW440W_textarea:focus-visible{border-color:var(--dsw-alias-brand-primary);outline:none}.wW440W_textarea:disabled{color:var(--dsw-alias-label-tertiary);cursor:default}.wW440W_hint{color:var(--dsw-alias-label-tertiary);margin:0;font-size:12px;line-height:1.5}.wW440W_footer{justify-content:flex-end;align-items:center;gap:8px;display:flex}.wW440W_failed{min-width:0;color:var(--dsw-alias-label-error);flex:1;margin:0;font-size:12px;line-height:1.5}.wW440W_suppress{border:1px solid var(--dsw-alias-border-l2);background:var(--dsw-alias-bg-layer-1);border-radius:10px;flex-direction:column;gap:8px;padding:12px;display:flex}.wW440W_suppressRow{align-items:center;gap:12px;display:flex}.wW440W_suppressLabel{min-width:0;color:var(--dsw-alias-label-primary);flex:1;font-size:13px;font-weight:500;line-height:1.5}.wW440W_switch{box-sizing:border-box;background:var(--dsw-alias-border-l3);cursor:pointer;border:0;border-radius:10px;flex:none;width:36px;height:20px;padding:2px;position:relative}.wW440W_switchOn{background:var(--dsw-alias-brand-primary)}.wW440W_switch:disabled{cursor:default;opacity:.5}.wW440W_switch:focus-visible{outline:2px solid var(--dsw-alias-brand-primary);outline-offset:2px}.wW440W_switchThumb{background:var(--dsw-alias-label-primary-foreground);border-radius:50%;width:16px;height:16px;transition:transform .12s;display:block}.wW440W_switchOn .wW440W_switchThumb{transform:translate(16px)}";
 		const tagId = "dsh-system-prompt/SystemPromptSection.module.css";
 		if (typeof document !== "undefined" && document.querySelector("style[data-plugin-css=" + JSON.stringify(tagId) + "]") === null) {
 			const tag = document.createElement("style");
@@ -20,19 +20,25 @@ window.__ModuleLoader__.load({
 			document.head.appendChild(tag);
 		}
 		var SystemPromptSection_module_css_default = {
-			"textarea": "wW440W_textarea",
-			"title": "wW440W_title",
-			"status": "wW440W_status",
-			"badge": "wW440W_badge",
-			"intro": "wW440W_intro",
-			"hint": "wW440W_hint",
-			"footer": "wW440W_footer",
+			"switch": "wW440W_switch",
+			"label": "wW440W_label",
 			"failed": "wW440W_failed",
+			"status": "wW440W_status",
 			"reset": "wW440W_reset",
-			"section": "wW440W_section",
-			"badges": "wW440W_badges",
+			"hint": "wW440W_hint",
+			"suppress": "wW440W_suppress",
+			"title": "wW440W_title",
+			"footer": "wW440W_footer",
 			"head": "wW440W_head",
-			"label": "wW440W_label"
+			"textarea": "wW440W_textarea",
+			"switchOn": "wW440W_switchOn",
+			"switchThumb": "wW440W_switchThumb",
+			"suppressLabel": "wW440W_suppressLabel",
+			"section": "wW440W_section",
+			"intro": "wW440W_intro",
+			"badge": "wW440W_badge",
+			"badges": "wW440W_badges",
+			"suppressRow": "wW440W_suppressRow"
 		};
 		//#endregion
 		//#region src/client/SystemPromptSection.tsx
@@ -42,10 +48,12 @@ window.__ModuleLoader__.load({
 		* @returns the section element tree.
 		*/
 		function SystemPromptSection(props) {
-			const { useSystemPromptSection, t, edit, reset, save, discard } = props;
+			const { useSystemPromptSection, useBuiltinSuppress, t, edit, reset, save, discard, toggleSuppress } = props;
 			const state = useSystemPromptSection((snapshot) => snapshot);
+			const suppress = useBuiltinSuppress((snapshot) => snapshot);
 			const disabled = !state.writable || !state.available || state.saving;
 			const saveBlocked = disabled || !state.dirty;
+			const suppressDisabled = !suppress.writable || !suppress.available || suppress.saving;
 			return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)("div", {
 				className: SystemPromptSection_module_css_default.section,
 				children: [
@@ -66,6 +74,39 @@ window.__ModuleLoader__.load({
 						role: "status",
 						children: t("readOnly")
 					}) : null,
+					/* @__PURE__ */ (0, react_jsx_runtime.jsxs)("div", {
+						className: SystemPromptSection_module_css_default.suppress,
+						children: [
+							/* @__PURE__ */ (0, react_jsx_runtime.jsxs)("div", {
+								className: SystemPromptSection_module_css_default.suppressRow,
+								children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)("span", {
+									className: SystemPromptSection_module_css_default.suppressLabel,
+									id: "dsh-system-prompt-suppress-label",
+									children: t("suppress")
+								}), /* @__PURE__ */ (0, react_jsx_runtime.jsx)("button", {
+									type: "button",
+									role: "switch",
+									className: suppress.on ? `${SystemPromptSection_module_css_default.switch} ${SystemPromptSection_module_css_default.switchOn}` : SystemPromptSection_module_css_default.switch,
+									"aria-checked": suppress.on,
+									"aria-labelledby": "dsh-system-prompt-suppress-label",
+									disabled: suppressDisabled,
+									onClick: toggleSuppress,
+									children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)("span", { className: SystemPromptSection_module_css_default.switchThumb })
+								})]
+							}),
+							/* @__PURE__ */ (0, react_jsx_runtime.jsx)("p", {
+								className: SystemPromptSection_module_css_default.hint,
+								children: t("suppressHint")
+							}),
+							suppress.on ? /* @__PURE__ */ (0, react_jsx_runtime.jsx)("span", {
+								className: SystemPromptSection_module_css_default.badge,
+								children: t("suppressOn")
+							}) : /* @__PURE__ */ (0, react_jsx_runtime.jsx)("span", {
+								className: SystemPromptSection_module_css_default.badge,
+								children: t("suppressOff")
+							})
+						]
+					}),
 					/* @__PURE__ */ (0, react_jsx_runtime.jsxs)("div", {
 						className: SystemPromptSection_module_css_default.head,
 						children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)("label", {
@@ -274,12 +315,71 @@ window.__ModuleLoader__.load({
 			}
 		};
 		//#endregion
+		//#region src/client/suppress-form.ts
+		/**
+		* Immediate switch over the plugin-owned `dsh-system-prompt` namespace.
+		*
+		* A stored `suppressBuiltin: true` drops every assembled prompt section except
+		* a non-empty user-layer persona overlay. The write is not staged: toggling
+		* persists on the next click so the following model step already hides the
+		* default identity, source, GUI, and tool-guidance prose.
+		*/
+		/** Plugin-owned settings namespace. Hyphenated: settings ids cannot contain dots. */
+		const SUPPRESS_SETTINGS_NS = "dsh-system-prompt";
+		/**
+		* Binds the suppress switch to the plugin settings namespace.
+		*/
+		var BuiltinSuppress = class {
+			scope;
+			/** Snapshot the section renderer subscribes to. */
+			store;
+			saving = false;
+			/**
+			* @param scope - the bound settings scope for {@link SUPPRESS_SETTINGS_NS}.
+			*/
+			constructor(scope) {
+				this.scope = scope;
+				this.store = (0, _deepseek_ai_dsh_client_store.createSnapshotStore)(this.project());
+				scope.subscribe(() => {
+					this.publish();
+				});
+			}
+			/**
+			* Persist the opposite of the current stored flag.
+			* @returns settlement after the write.
+			*/
+			async toggle() {
+				if (this.saving) return;
+				const next = !this.on();
+				this.saving = true;
+				this.publish();
+				await this.scope.set("suppressBuiltin", next);
+				this.saving = false;
+				this.publish();
+			}
+			on() {
+				return this.scope.getSnapshot().value?.suppressBuiltin === true;
+			}
+			project() {
+				const snapshot = this.scope.getSnapshot();
+				return {
+					available: snapshot.status === "ready",
+					writable: snapshot.writable,
+					saving: this.saving,
+					on: snapshot.value?.suppressBuiltin === true
+				};
+			}
+			publish() {
+				this.store.set(this.project());
+			}
+		};
+		//#endregion
 		//#region src/client/locales.ts
 		/** English copy. */
 		const en$1 = {
 			nav: "System prompt",
 			title: "System prompt",
-			intro: "This page replaces the identity fragment of every session, including sessions composed from an agent preset. Tool guidance stays with each tool plugin. Changes apply on the next model step. Available variables include {{model}}, {{cwd}}, and {{provider}}; an unknown {{name}} fails that step.",
+			intro: "This page replaces the identity fragment of every session, including sessions composed from an agent preset. Turn on Hide defaults to drop the harness opener, source path, GUI notes, and every tool-guidance section. Changes apply on the next model step. Available variables include {{model}}, {{cwd}}, and {{provider}}; an unknown {{name}} fails that step.",
 			label: "Identity",
 			hint: "Leave empty and save to send no identity fragment. Reset unsets this overlay so composition and each agent preset use their own identity text.",
 			overridden: "Overridden",
@@ -289,13 +389,17 @@ window.__ModuleLoader__.load({
 			saving: "Saving…",
 			discard: "Discard",
 			saveFailed: "The deployment did not accept these values; they were left for you to correct.",
-			unavailable: "This deployment does not expose a system-prompt setting."
+			unavailable: "This deployment does not expose a system-prompt setting.",
+			suppress: "Hide default system prompt",
+			suppressHint: "When on, identity, checkout path, GUI notes, @-path notes, and every tool how-to section are not sent. Text in the box below still is, if you saved an overlay.",
+			suppressOn: "Defaults hidden",
+			suppressOff: "Defaults sent"
 		};
 		/** Simplified Chinese copy. */
 		const zh$1 = {
 			nav: "系统提示词",
 			title: "系统提示词",
-			intro: "本页替换每个会话的身份片段，包括由 Agent 预设组成的会话。工具指导仍由各工具插件注册。修改在下一轮模型步骤生效。可用变量包括 {{model}}、{{cwd}} 和 {{provider}}；未知 {{name}} 会使该步失败。",
+			intro: "本页替换每个会话的身份片段，包括由 Agent 预设组成的会话。打开「屏蔽默认系统提示词」后，身份开场、源码路径、GUI 说明和各工具指导段都不再发给模型。修改在下一轮模型步骤生效。可用变量包括 {{model}}、{{cwd}} 和 {{provider}}；未知 {{name}} 会使该步失败。",
 			label: "身份",
 			hint: "留空并保存表示不发送身份片段。恢复默认会取消本覆盖，组合配置与各 Agent 预设会重新使用各自的身份原文。",
 			overridden: "已覆盖",
@@ -305,7 +409,11 @@ window.__ModuleLoader__.load({
 			saving: "保存中…",
 			discard: "放弃修改",
 			saveFailed: "本部署没有接受这些值，已保留供你修改。",
-			unavailable: "本部署没有开放系统提示词设置。"
+			unavailable: "本部署没有开放系统提示词设置。",
+			suppress: "屏蔽默认系统提示词",
+			suppressHint: "打开后，身份开场、源码路径、GUI 说明、@ 路径说明和各工具指导段都不再发给模型。下方文本框里已保存的身份覆盖仍会发送。",
+			suppressOn: "已屏蔽默认",
+			suppressOff: "正在发送默认"
 		};
 		//#endregion
 		//#region src/client/rewind/hidden.ts
@@ -2519,17 +2627,24 @@ window.__ModuleLoader__.load({
 		*/
 		function apply(ctx) {
 			const form = new PersonaForm(ctx.settingsScope.bind({ namespace: SYSTEM_PROMPT_SETTINGS_NS }));
+			const suppress = new BuiltinSuppress(ctx.settingsScope.bind({ namespace: SUPPRESS_SETTINGS_NS }));
 			const actions = form.actions();
 			ctx.effect(() => ctx.locale.register("settings.dshSystemPrompt", {
 				zh: zh$1,
 				en: en$1
 			}), "dsh-system-prompt: dictionaries");
 			const sectionInjected = () => ({
-				hooks: { systemPromptSection: form.store },
+				hooks: {
+					systemPromptSection: form.store,
+					builtinSuppress: suppress.store
+				},
 				edit: actions.edit,
 				reset: actions.reset,
 				save: actions.save,
-				discard: actions.discard
+				discard: actions.discard,
+				toggleSuppress: () => {
+					suppress.toggle();
+				}
 			});
 			ctx.slots.inject("settings.section", () => ctx.slots.register({
 				name: "settings.section",

@@ -1,7 +1,9 @@
 /**
  * Overlay the `deployment:persona` section from the user-layer
  * `system-prompt.persona` setting on every assemble, including agent-preset
- * scopes. Registers the settings namespace when the composed harness has not.
+ * scopes. A stored `dsh-system-prompt.suppressBuiltin` drops every other
+ * prompt section. Registers the settings namespaces when the composed harness
+ * has not.
  */
 
 import type { Context } from '@deepseek-ai/cordis'
@@ -16,9 +18,14 @@ export const inject = ['systemPrompt']
 
 const PERSONA_SECTION = 'deployment:persona'
 const SETTINGS_NS = 'system-prompt'
+const SUPPRESS_NS = 'dsh-system-prompt'
 
 const SettingsSchema = z.object({
   persona: z.string(),
+})
+
+const SuppressSchema = z.object({
+  suppressBuiltin: z.boolean().default(false),
 })
 
 interface AssembledSection {
@@ -42,16 +49,16 @@ interface SettingsService {
   describe(): SettingsDescriptor[]
   register(
     ns: string,
-    schema: typeof SettingsSchema,
-    options?: { base?: { persona: string } },
+    schema: typeof SettingsSchema | typeof SuppressSchema,
+    options?: { base?: { persona: string } | { suppressBuiltin: boolean } },
   ): unknown
   installSection?(
     owner: Context,
     ns: string,
-    schema: typeof SettingsSchema,
-    entry: { persona: string },
+    schema: typeof SettingsSchema | typeof SuppressSchema,
+    entry: { persona: string } | { suppressBuiltin: boolean },
     hooks: {
-      setSource: (current: () => { persona: string }) => void
+      setSource: (current: () => unknown) => void
       onChange: () => void
     },
   ): void
@@ -71,6 +78,30 @@ function userPersonaOverlay(ctx: Context): string | undefined {
   if (!Object.hasOwn(user, 'persona')) return undefined
   const persona = (user as { persona: unknown }).persona
   return typeof persona === 'string' ? persona : undefined
+}
+
+/**
+ * Stored hide-defaults flag when `dsh-system-prompt.suppressBuiltin` is true.
+ * @param ctx - the plugin context.
+ * @returns true when default prompt sections should be dropped.
+ */
+function builtinSuppressed(ctx: Context): boolean {
+  const settings = ctx.get('settings') as SettingsService | undefined
+  if (settings === undefined) return false
+  const descriptor = settings.describe().find(row => String(row.ns) === SUPPRESS_NS)
+  const user = descriptor?.user
+  if (user === undefined || typeof user !== 'object' || user === null) return false
+  return (user as { suppressBuiltin?: unknown }).suppressBuiltin === true
+}
+
+/**
+ * Keep only a non-empty user overlay. Empty or unset overlay yields no sections.
+ * @param overlay - stored persona text, including `''`.
+ * @returns the suppressed section list.
+ */
+function suppressedSections(overlay: string | undefined): AssembledSection[] {
+  if (overlay === undefined || overlay === '') return []
+  return [{ name: PERSONA_SECTION, text: overlay }]
 }
 
 /**
@@ -105,17 +136,22 @@ function applyOverlay(sections: readonly AssembledSection[], overlay: string): A
  * @param ctx - the plugin context that owns the registration fiber.
  * @param settings - the live settings provider.
  */
-function registerPersonaSettings(ctx: Context, settings: SettingsService): void {
-  const entry = { persona: '' }
+function registerNamespace(
+  ctx: Context,
+  settings: SettingsService,
+  ns: string,
+  schema: typeof SettingsSchema | typeof SuppressSchema,
+  entry: { persona: string } | { suppressBuiltin: boolean },
+): void {
   try {
     if (typeof settings.installSection === 'function') {
-      settings.installSection(ctx, SETTINGS_NS, SettingsSchema, entry, {
+      settings.installSection(ctx, ns, schema, entry, {
         setSource: () => {},
         onChange: () => {},
       })
       return
     }
-    settings.register(SETTINGS_NS, SettingsSchema, { base: entry })
+    settings.register(ns, schema, { base: entry })
   } catch (error) {
     const message = error instanceof Error ? error.message : String(error)
     if (!message.includes('already registered')) throw error
@@ -129,7 +165,8 @@ function registerPersonaSettings(ctx: Context, settings: SettingsService): void 
 export function apply(ctx: Context): void {
   ctx.inject(['settings'], (settingsCtx) => {
     const settings = (settingsCtx as Context & { settings: SettingsService }).settings
-    registerPersonaSettings(settingsCtx, settings)
+    registerNamespace(settingsCtx, settings, SETTINGS_NS, SettingsSchema, { persona: '' })
+    registerNamespace(settingsCtx, settings, SUPPRESS_NS, SuppressSchema, { suppressBuiltin: false })
   })
 
   type AssembleListener = (
@@ -142,6 +179,9 @@ export function apply(ctx: Context): void {
     (async (assembly, _context, next) => {
       const result = await next()
       const overlay = userPersonaOverlay(ctx)
+      if (builtinSuppressed(ctx)) {
+        return { ...result, sections: suppressedSections(overlay) }
+      }
       if (overlay === undefined) return result
       return { ...result, sections: applyOverlay(result.sections, overlay) }
     }) as AssembleListener as never,

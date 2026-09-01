@@ -2,5 +2,5 @@ url: https://github.com/novtia/dsh-system-prompt
 name: novtia/dsh-system-prompt
 category: ui
 description:
-  en: Settings overlay for the deployment identity prompt, plus in-window conversation rewind with optional workspace restore.
-  zh: 在设置里覆盖身份提示词，并提供同窗口对话回退（可选还原工作区文件）。
+  en: Settings overlay for the deployment identity prompt, a switch to hide default system-prompt sections, plus in-window conversation rewind with optional workspace restore.
+  zh: 在设置里覆盖身份提示词，可一键屏蔽默认系统提示词与工具指导，并提供同窗口对话回退（可选还原工作区文件）。

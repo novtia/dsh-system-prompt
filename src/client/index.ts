@@ -7,6 +7,7 @@
 import { SystemPromptSection } from './SystemPromptSection.tsx'
 import type { SystemPromptSectionInjected } from './SystemPromptSection.tsx'
 import { PersonaForm, SYSTEM_PROMPT_SETTINGS_NS, type SystemPromptSettings } from './persona-form.ts'
+import { BuiltinSuppress, SUPPRESS_SETTINGS_NS, type SuppressSettings } from './suppress-form.ts'
 import { en, zh } from './locales.ts'
 import type { SettingsScope } from '@deepseek-ai/dsh-client-ui-settings/client'
 import { apply as applyRewind } from './rewind/index.ts'
@@ -19,7 +20,7 @@ interface ClientApplyContext {
     bind(namespace: string): (key: string) => string
   }
   settingsScope: {
-    bind(request: { namespace: string }): SettingsScope<SystemPromptSettings>
+    bind(request: { namespace: string }): SettingsScope<SystemPromptSettings | SuppressSettings>
   }
   slots: {
     inject(name: string, factory: () => unknown): unknown
@@ -42,17 +43,19 @@ export const inject = ['slots', 'locale', 'settingsScope']
  * @param ctx - the browser plugin context.
  */
 export function apply(ctx: ClientApplyContext): void {
-  const form = new PersonaForm(ctx.settingsScope.bind({ namespace: SYSTEM_PROMPT_SETTINGS_NS }))
+  const form = new PersonaForm(ctx.settingsScope.bind({ namespace: SYSTEM_PROMPT_SETTINGS_NS }) as SettingsScope<SystemPromptSettings>)
+  const suppress = new BuiltinSuppress(ctx.settingsScope.bind({ namespace: SUPPRESS_SETTINGS_NS }) as SettingsScope<SuppressSettings>)
   const actions = form.actions()
 
   ctx.effect(() => ctx.locale.register('settings.dshSystemPrompt', { zh, en }), 'dsh-system-prompt: dictionaries')
 
   const sectionInjected = (): SystemPromptSectionInjected => ({
-    hooks: { systemPromptSection: form.store },
+    hooks: { systemPromptSection: form.store, builtinSuppress: suppress.store },
     edit: actions.edit,
     reset: actions.reset,
     save: actions.save,
     discard: actions.discard,
+    toggleSuppress: () => { void suppress.toggle() },
   })
 
   ctx.slots.inject('settings.section', () => ctx.slots.register({

@@ -1,7 +1,7 @@
 {
   "name": "dsh-system-prompt",
   "description": "DSH plugin: settings overlay for the deployment identity prompt, plus in-window conversation rewind with optional workspace restore.",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "type": "module",
   "main": "lib/index.js",
   "types": "lib/types/index.d.ts",

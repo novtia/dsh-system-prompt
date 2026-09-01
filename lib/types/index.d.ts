@@ -1,7 +1,9 @@
 /**
  * Overlay the `deployment:persona` section from the user-layer
  * `system-prompt.persona` setting on every assemble, including agent-preset
- * scopes. Registers the settings namespace when the composed harness has not.
+ * scopes. A stored `dsh-system-prompt.suppressBuiltin` drops every other
+ * prompt section. Registers the settings namespaces when the composed harness
+ * has not.
  */
 import type { Context } from '@deepseek-ai/cordis';
 /** Cordis plugin name. */

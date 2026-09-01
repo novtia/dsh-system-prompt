@@ -3,15 +3,18 @@
 import type { SnapshotStore } from '@deepseek-ai/dsh-client-store'
 import { Button } from '@deepseek-ai/dsh-client-ui-primitives'
 import type { PersonaFormState } from './persona-form.ts'
+import type { SuppressState } from './suppress-form.ts'
 import css from './SystemPromptSection.module.css'
 
 type SystemPromptSectionProps = {
   useSystemPromptSection: (selector: (snapshot: PersonaFormState) => PersonaFormState) => PersonaFormState
+  useBuiltinSuppress: (selector: (snapshot: SuppressState) => SuppressState) => SuppressState
   t: (key: string) => string
   edit: (text: string) => void
   reset: () => void
   save: () => void
   discard: () => void
+  toggleSuppress: () => void
 }
 
 /** Registration-side business face for the system-prompt page. */
@@ -19,6 +22,8 @@ export interface SystemPromptSectionInjected {
   hooks: {
     /** Page snapshot bound by the renderer as useSystemPromptSection. */
     systemPromptSection: SnapshotStore<PersonaFormState>
+    /** Switch snapshot bound by the renderer as useBuiltinSuppress. */
+    builtinSuppress: SnapshotStore<SuppressState>
   }
   /** Stage draft text. */
   edit: (text: string) => void
@@ -28,6 +33,8 @@ export interface SystemPromptSectionInjected {
   save: () => void
   /** Drop the staged edit. */
   discard: () => void
+  /** Persist the opposite of the current hide-defaults flag. */
+  toggleSuppress: () => void
 }
 
 /**
@@ -36,10 +43,15 @@ export interface SystemPromptSectionInjected {
  * @returns the section element tree.
  */
 export function SystemPromptSection(props: SystemPromptSectionProps) {
-  const { useSystemPromptSection, t, edit, reset, save, discard } = props
+  const {
+    useSystemPromptSection, useBuiltinSuppress, t,
+    edit, reset, save, discard, toggleSuppress,
+  } = props
   const state = useSystemPromptSection(snapshot => snapshot)
+  const suppress = useBuiltinSuppress(snapshot => snapshot)
   const disabled = !state.writable || !state.available || state.saving
   const saveBlocked = disabled || !state.dirty
+  const suppressDisabled = !suppress.writable || !suppress.available || suppress.saving
   return (
     <div className={css.section}>
       <h2 className={css.title}>{t('title')}</h2>
@@ -49,6 +61,26 @@ export function SystemPromptSection(props: SystemPromptSectionProps) {
         : !state.writable
           ? <p className={css.status} role="status">{t('readOnly')}</p>
           : null}
+      <div className={css.suppress}>
+        <div className={css.suppressRow}>
+          <span className={css.suppressLabel} id="dsh-system-prompt-suppress-label">{t('suppress')}</span>
+          <button
+            type="button"
+            role="switch"
+            className={suppress.on ? `${css.switch} ${css.switchOn}` : css.switch}
+            aria-checked={suppress.on}
+            aria-labelledby="dsh-system-prompt-suppress-label"
+            disabled={suppressDisabled}
+            onClick={toggleSuppress}
+          >
+            <span className={css.switchThumb} />
+          </button>
+        </div>
+        <p className={css.hint}>{t('suppressHint')}</p>
+        {suppress.on
+          ? <span className={css.badge}>{t('suppressOn')}</span>
+          : <span className={css.badge}>{t('suppressOff')}</span>}
+      </div>
       <div className={css.head}>
         <label className={css.label} htmlFor="dsh-system-prompt-persona">{t('label')}</label>
         {state.overridden

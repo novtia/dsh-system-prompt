@@ -36,12 +36,13 @@ Do **not** also install `dsh-rewind-plugin` — rewind is already in this packag
 
 ## System prompt
 
-- Edits only the identity fragment. Tool-guidance sections stay with each tool plugin.
-- An empty saved value hides the identity fragment. **Reset** unsets the overlay so composition and each agent preset use their own text again.
+- Edits the identity fragment. Tool-guidance sections stay with each tool plugin unless **Hide default system prompt** is on.
+- **Hide default system prompt** is an immediate switch: it drops the harness opener, checkout path, GUI notes, `@` path notes, and every tool how-to section. A saved identity overlay in the box still goes out; leave it empty to send no prompt sections.
+- An empty saved identity hides that fragment only. **Reset** unsets the overlay so composition and each agent preset use their own text again.
 - Changes apply on the next model step.
 - Template variables include `{{model}}`, `{{cwd}}`, and `{{provider}}`; an unknown `{{name}}` fails that step.
 
-A preset that marks its persona `complete: true` restores that section after the assemble waterfall, so this overlay cannot replace that complete prompt.
+A preset that marks its persona `complete: true` restores that section after the assemble waterfall, so hide-defaults cannot replace that complete prompt.
 
 ## Rewind
 
