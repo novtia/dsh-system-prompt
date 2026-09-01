@@ -1,6 +1,7 @@
 MIT License
 
 Copyright (c) 2026 novtia
+Copyright (c) 2026 SiriLee (in-window rewind: host `src/rewind/` and client `src/client/rewind/`, derived from https://github.com/SiriLee/dsh-rewind)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

@@ -9,9 +9,11 @@ import type { SystemPromptSectionInjected } from './SystemPromptSection.tsx'
 import { PersonaForm, SYSTEM_PROMPT_SETTINGS_NS, type SystemPromptSettings } from './persona-form.ts'
 import { en, zh } from './locales.ts'
 import type { SettingsScope } from '@deepseek-ai/dsh-client-ui-settings/client'
+import { apply as applyRewind } from './rewind/index.ts'
 
 interface ClientApplyContext {
   effect(callback: () => () => void, label?: string): void
+  inject(deps: string[], callback: (scoped: unknown) => void): void
   locale: {
     register(namespace: string, dictionaries: { zh: typeof zh; en: typeof en }): () => void
     bind(namespace: string): (key: string) => string
@@ -61,4 +63,10 @@ export function apply(ctx: ClientApplyContext): void {
     locale: 'settings.dshSystemPrompt',
     inject: sectionInjected,
   }, SystemPromptSection))
+
+  // Nested: rewind needs sessions + commandUi. A host without them still gets
+  // the settings page. Rewind source is SiriLee/dsh-rewind (MIT).
+  ctx.inject(['sessions', 'commandUi'], (scoped) => {
+    applyRewind(scoped as Parameters<typeof applyRewind>[0])
+  })
 }

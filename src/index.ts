@@ -6,6 +6,7 @@
 
 import type { Context } from '@deepseek-ai/cordis'
 import z from '@deepseek-ai/schemastery'
+import * as rewind from './rewind/index.ts'
 
 /** Cordis plugin name. */
 export const name = 'dsh-system-prompt'
@@ -145,4 +146,8 @@ export function apply(ctx: Context): void {
       return { ...result, sections: applyOverlay(result.sections, overlay) }
     }) as AssembleListener as never,
   )
+
+  // Nested plugin: waits on `commands`/`tools` itself so a host without them
+  // still gets the persona overlay. Rewind source is SiriLee/dsh-rewind (MIT).
+  ctx.plugin(rewind)
 }

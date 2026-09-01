@@ -10,9 +10,13 @@
     "strict": true,
     "skipLibCheck": true,
     "verbatimModuleSyntax": true,
-    "isolatedModules": true
+    "isolatedModules": true,
+    "allowImportingTsExtensions": true,
+    "rewriteRelativeImportExtensions": true,
+    "types": ["node"]
   },
   "include": [
-    "src/index.ts"
+    "src/index.ts",
+    "src/rewind/**/*.ts"
   ]
 }
